@@ -31,7 +31,16 @@ export default function Register() {
       <Card className="w-100" style={{ maxWidth: '400px' }}>
         <Card.Body className="p-4">
           <h2 className="h4 mb-4 text-center">Cadastro</h2>
-          {error && <Alert variant="danger" dismissible onClose={() => setError('')}>{error}</Alert>}
+          {error && (
+            <Alert variant="danger" dismissible onClose={() => setError('')}>
+              {error}
+              {error.includes('conectar ao servidor') && (
+                <div className="mt-2 small">
+                  No terminal: <code className="bg-light px-1">cd backend && uvicorn app.main:app --reload --port 8000</code>
+                </div>
+              )}
+            </Alert>
+          )}
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Nome (opcional)</Form.Label>
