@@ -98,7 +98,7 @@ async def get_article(
             Article.user_id == current_user.id,
         )
     )
-    article = result.scalar_one_or_none()
+    article = result.scalars().one_or_none()
     if not article:
         raise HTTPException(status_code=404, detail="Artigo não encontrado")
     return ArticleResponse.model_validate(article)
@@ -117,7 +117,7 @@ async def delete_article(
             Article.user_id == current_user.id,
         )
     )
-    article = result.scalar_one_or_none()
+    article = result.scalars().one_or_none()
     if not article:
         raise HTTPException(status_code=404, detail="Artigo não encontrado")
     await db.delete(article)

@@ -4,7 +4,17 @@ from openai import AsyncOpenAI
 from app.config import get_settings
 
 settings = get_settings()
-client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY) if settings.OPENAI_API_KEY else None
+_client: AsyncOpenAI | None = None
+
+
+def _get_client() -> AsyncOpenAI:
+    """Cliente OpenAI criado sob demanda (evita erro de import com httpx)."""
+    global _client
+    if _client is None:
+        if not settings.OPENAI_API_KEY:
+            raise ValueError("OPENAI_API_KEY não configurada. Defina no .env.")
+        _client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+    return _client
 
 SYSTEM_PROMPT = """Você é um redator especializado em criar artigos para WordPress.
 Gere artigos em HTML adequado para WordPress (pode usar <p>, <h2>, <h3>, <ul>, <ol>, <strong>, <em>).
@@ -24,9 +34,7 @@ async def generate_article(topic: str, model: str = "gpt-4o-mini") -> dict:
     Gera um artigo com base no tema usando OpenAI.
     Retorna dict com title, content, excerpt, slug.
     """
-    if not client:
-        raise ValueError("OPENAI_API_KEY não configurada. Defina no .env.")
-
+    client = _get_client()
     user_prompt = f"Crie um artigo completo para WordPress sobre: {topic}"
 
     response = await client.chat.completions.create(

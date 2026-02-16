@@ -19,5 +19,5 @@ class Article(Base):
     prompt_or_topic = Column(String(1000), nullable=True)
     model_used = Column(String(100), nullable=True)
 
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
