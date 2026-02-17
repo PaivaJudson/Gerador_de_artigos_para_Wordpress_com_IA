@@ -24,9 +24,16 @@ async def register(data: UserCreate, db: AsyncSession = Depends(get_db)):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="E-mail já cadastrado",
         )
+    try:
+        hashed = hash_password(data.password)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )
     user = User(
         email=data.email,
-        hashed_password=hash_password(data.password),
+        hashed_password=hashed,
         full_name=data.full_name,
     )
     db.add(user)
