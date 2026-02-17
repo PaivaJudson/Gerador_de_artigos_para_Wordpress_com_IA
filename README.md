@@ -2,6 +2,34 @@
 
 Projeto full-stack para gerar artigos em HTML para WordPress usando a API da OpenAI, com autenticação e persistência em banco de dados.
 
+## Como executar o sistema
+
+**Pré-requisitos:** Python 3.10+, Node.js 18+, chave da API OpenAI.
+
+### Terminal 1 — Backend
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env
+# Edite .env e coloque sua OPENAI_API_KEY=sk-...
+uvicorn app.main:app --reload --port 8000
+```
+
+### Terminal 2 — Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Depois acesse **http://localhost:5173**. Para ver as páginas sem login, use **http://localhost:5173/demo**.
+
+---
+
 ## Stack
 
 | Camada    | Tecnologia        | Observação                          |

@@ -1,11 +1,16 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { DemoProvider } from './context/DemoContext'
 import Layout from './components/Layout'
+import DemoLayout from './components/DemoLayout'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Generate from './pages/Generate'
 import ArticleDetail from './pages/ArticleDetail'
+import DashboardDemo from './pages/DashboardDemo'
+import GenerateDemo from './pages/GenerateDemo'
+import ArticleDetailDemo from './pages/ArticleDetailDemo'
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth()
@@ -48,6 +53,16 @@ function AppRoutes() {
           <Register />
         </PublicOnlyRoute>
       } />
+      {/* Demonstração: ver páginas sem login */}
+      <Route path="/demo" element={
+        <DemoProvider>
+          <DemoLayout />
+        </DemoProvider>
+      }>
+        <Route index element={<DashboardDemo />} />
+        <Route path="gerar" element={<GenerateDemo />} />
+        <Route path="artigo/:id" element={<ArticleDetailDemo />} />
+      </Route>
       <Route path="/" element={
         <PrivateRoute>
           <Layout />

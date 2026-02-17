@@ -81,6 +81,9 @@ export default function Register() {
             <p className="text-center text-muted small mb-0">
               Já tem conta? <Link to="/login">Entrar</Link>
             </p>
+            <p className="text-center mt-2 mb-0">
+              <Link to="/demo">Ver demonstração</Link> — navegar nas páginas sem login
+            </p>
           </Form>
         </Card.Body>
       </Card>

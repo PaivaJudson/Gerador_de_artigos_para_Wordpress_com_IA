@@ -69,6 +69,9 @@ export default function Login() {
             <p className="text-center text-muted small mb-0">
               Não tem conta? <Link to="/register">Cadastre-se</Link>
             </p>
+            <p className="text-center mt-2 mb-0">
+              <Link to="/demo">Ver demonstração</Link> — navegar nas páginas sem login
+            </p>
           </Form>
         </Card.Body>
       </Card>
